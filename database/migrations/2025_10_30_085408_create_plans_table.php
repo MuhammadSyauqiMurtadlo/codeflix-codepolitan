@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('duration');
             $table->enum('resolution', ['720p', '1080p', '4K']);
+            $table->integer('max_devices');
             $table->timestamps();
         });
     }
