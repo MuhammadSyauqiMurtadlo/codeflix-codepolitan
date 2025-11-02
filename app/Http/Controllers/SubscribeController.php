@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SubscribeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function showPlans()
     {
