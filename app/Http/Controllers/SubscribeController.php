@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SubscribeController extends Controller
@@ -19,6 +20,12 @@ class SubscribeController extends Controller
     {
         $plans = Plan::all();
         return view('subscribe.plans', compact('plans'));
+    }
+
+    public function checkoutPlan(Plan $plan)
+    {
+        $user = Auth::user();
+        return view('subscribe.checkout', compact('plan'));
     }
 
     public function index()
