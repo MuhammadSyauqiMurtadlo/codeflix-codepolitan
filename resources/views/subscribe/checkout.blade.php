@@ -14,26 +14,20 @@
                     <span class="fs-5">Rp.{{ number_format($plan->price, 0, ',', '.') }}</span>
                 </div>
             </div>
-
             <hr class="border-green">
-
             <div class="mb-2 row">
                 <div class="col-8">Subtotal</div>
                 <div class="col-4 text-end">Rp.{{ number_format($plan->price, 0, ',', '.') }}</div>
             </div>
-
             <div class="mb-2 row">
                 <div class="col-8">Ppn 12%</div>
                 <div class="col-4 text-end">Rp.{{ number_format($plan->price * 0.12, 0, ',', '.') }}</div>
             </div>
-
             <hr class="border-green">
-
             <div class="mb-4 row">
                 <div class="col-8">Total payment</div>
                 <div class="col-4 text-end fw-bold">Rp.{{ number_format($plan->price * 1.1, 0, ',', '.') }}</div>
             </div>
-
             <div class="mb-3 form-check">
                 <input class="form-check-input" type="checkbox" id="terms" required>
                 <label class="form-check-label" for="terms">
@@ -42,8 +36,7 @@
                     <a href="#" class="text-info">Privacy Policy</a>
                 </label>
             </div>
-
-            <form action="#" method="POST">
+            <form action="{{ route('subscribe.success') }}" method="POST">
                 <button type="submit" class="w-100 btn btn-green" id="pay-button">Continue</button>
             </form>
         </div>

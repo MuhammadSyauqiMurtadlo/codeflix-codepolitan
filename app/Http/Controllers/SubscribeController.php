@@ -28,6 +28,24 @@ class SubscribeController extends Controller
         return view('subscribe.checkout', compact('plan'));
     }
 
+    public function processCheckout(Request $request)
+    {
+        $user = Auth::user();
+        $plan = Plan::findOrFail($request->plan_id);
+        $user->memberships()->create([
+            'plan_id' => $plan->id,
+            'active' => true,
+            'started_date' => now(),
+            'end_date' => now()->addDays($plan->duration),
+        ]);
+        return redirect()->route('subscribe.success');
+    }
+
+    public function showSuccess()
+    {
+        return view('subscribe.success');
+    }
+
     public function index()
     {
         // Logic to retrieve and display subscription plans

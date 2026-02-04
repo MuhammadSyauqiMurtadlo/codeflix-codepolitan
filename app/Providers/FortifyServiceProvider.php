@@ -37,7 +37,7 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 // check if user has an active membership plan
                 //! Auth/$request->user()
-                if ($request->user()->hasMembershipPlan()) {
+                if (Auth::user()->hasMembershipPlan()) {
                     return redirect()->intended(config('fortify.home'));
                 }
 
