@@ -36,8 +36,11 @@
                     <a href="#" class="text-info">Privacy Policy</a>
                 </label>
             </div>
-            <form action="{{ route('subscribe.success') }}" method="POST">
-                <button type="submit" class="w-100 btn btn-green" id="pay-button">Continue</button>
+            <form action="{{ route('subscribe.process') }}" method="POST">
+                @csrf
+                <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                <input type="hidden" name="total_payment" value="{{ $plan->price * 1.1 }}">
+                <button type="submit" class="w-100 btn btn-green">Continue</button>
             </form>
         </div>
     </div>

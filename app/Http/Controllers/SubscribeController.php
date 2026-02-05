@@ -35,7 +35,7 @@ class SubscribeController extends Controller
         $user->memberships()->create([
             'plan_id' => $plan->id,
             'active' => true,
-            'started_date' => now(),
+            'start_date' => now(),
             'end_date' => now()->addDays($plan->duration),
         ]);
         return redirect()->route('subscribe.success');
