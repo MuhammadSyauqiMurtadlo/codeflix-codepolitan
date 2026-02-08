@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+
 use App\Models\User;
 use App\Models\UserDevice;
 use Illuminate\Support\Str;
@@ -8,12 +9,10 @@ use Jenssegers\Agent\Facades\Agent;
 
 class DeviceLimitService
 {
-    /**
-     * Create a new class instance.
-     */
     public function registerDevice(User $user)
     {
         $deviceInfo = $this->getDeviceInfo();
+
         $existingDevice = $this->findExistingDevice($user, $deviceInfo);
 
         if ($existingDevice) {
@@ -21,7 +20,7 @@ class DeviceLimitService
             session(['device_id' => $existingDevice->device_id]);
             return $existingDevice;
         }
-        
+
         if ($this->hasReachedDeviceLimit($user)) {
             return false; // Tidak bisa login di device tambahan
         }
@@ -31,7 +30,13 @@ class DeviceLimitService
         return $device;
     }
 
-    private function getDeviceInfo() 
+    public function logoutDevice($deviceId)
+    {
+        UserDevice::where('device_id', $deviceId)->delete();
+        session()->forget('device_id');
+    }
+
+    private function getDeviceInfo()
     {
         return [
             'device_name' => $this->generateDeviceName(),
@@ -43,9 +48,9 @@ class DeviceLimitService
         ];
     }
 
-    public function generateDeviceName()
+    private function generateDeviceName()
     {
-        return ucfirst(Agent::platform()) . ' - ' . ucfirst(Agent::browser());
+        return ucfirst(Agent::platform()) . ' ' . ucfirst(Agent::browser());
     }
 
     private function findExistingDevice(User $user, array $deviceInfo)
@@ -60,9 +65,10 @@ class DeviceLimitService
     private function hasReachedDeviceLimit(User $user)
     {
         $maxDevices = $user->getCurrentPlan()->max_devices ?? 1;
-        return UserDevice::
-        
-        private function createNewDevice(User $user, array $deviceInfo)
+        return UserDevice::where('user_id', $user->id)->count() >= $maxDevices;
+    }
+
+    private function createNewDevice(User $user, array $deviceInfo)
     {
         return UserDevice::create([
             'user_id' => $user->id,
