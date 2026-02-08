@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Membership;
+use App\Models\UserDevice;
+
 
 class User extends Authenticatable
 {
@@ -49,6 +52,11 @@ class User extends Authenticatable
     public function memberships(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Membership::class);
+    }
+
+    public function Devices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserDevice::class);
     }
 
     public function hasMembershipPlan(): bool
