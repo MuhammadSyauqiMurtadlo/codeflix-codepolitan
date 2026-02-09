@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'check.device.limit' => App\Http\Middleware\CheckDeviceLimit::class,
+            'logout.device' => App\Http\Middleware\LogoutDevice::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
