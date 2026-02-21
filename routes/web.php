@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubscribeController;
+use App\Http\Controllers\MovieController;
 use Illuminate\Http\Request;
 
 // Public route
@@ -9,9 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->middleware(['auth', 'check.device.limit'])->name('home');
+Route::get('/home', [MovieController::class, 'index'])->middleware(['auth', 'check.device.limit'])->name('home');
 
 Route::post('/logout', function (Request $request) {
     // Laravel Fortify menangani logout, kita hanya tambahkan middleware
