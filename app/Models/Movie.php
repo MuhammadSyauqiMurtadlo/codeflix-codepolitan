@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
@@ -28,5 +30,15 @@ class Movie extends Model
     public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return $this->ratings()->avg('rating');
     }
 }
