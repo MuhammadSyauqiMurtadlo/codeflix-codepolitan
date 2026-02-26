@@ -10,9 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('movies.index');
-})->middleware(['auth', 'check.device.limit'])->name('home');
+Route::get('/home', [MovieController::class, 'index'])->name('home');
 
 Route::post('/logout', function (Request $request) {
     // Laravel Fortify menangani logout, kita hanya tambahkan middleware
