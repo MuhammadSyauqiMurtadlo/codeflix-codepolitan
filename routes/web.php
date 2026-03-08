@@ -6,10 +6,7 @@ use App\Http\Controllers\SubscribeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Public route
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MovieController::class, 'index']);
 
 Route::get('/home', [MovieController::class, 'index'])->name('home');
 Route::get('/movies', [MovieController::class, 'all'])->name('movies.index');
