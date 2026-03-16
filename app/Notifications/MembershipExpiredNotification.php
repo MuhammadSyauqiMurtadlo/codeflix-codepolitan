@@ -2,7 +2,9 @@
 
 namespace App\Notifications;
 
+use App\Mail\MembershipExpiredMail;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -34,15 +36,9 @@ class MembershipExpiredNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): Mailable
     {
-        return (new MailMessage)
-            ->subject('Membership Expired | Codeflix')
-            ->greeting('Hello ')
-            ->line('Your membership has expired. Please renew to continue enjoying our services.')
-            ->line('Expired Date :' . $this->membership->end_date->format('Y-m-d H:i:s'))
-            ->action('Renew Membership', url('/renew'))
-            ->line('Thank you for using our application!');
+        return (new MembershipExpiredMail($this->membership))->to($notifiable->email);
     }
 
     /**
